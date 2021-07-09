@@ -1,25 +1,11 @@
-function redondeoSimetrico(num, decimales = 2) {
-    var signo = (num >= 0 ? 1 : -1);
-    num = num * signo;
-    if (decimales === 0) //con 0 decimales
-        return signo * Math.round(num);
-    // round(x * 10 ^ decimales)
-    num = num.toString().split('e');
-    num = Math.round(+(num[0] + 'e' + (num[1] ? (+num[1] + decimales) : decimales)));
-    // x * 10 ^ (-decimales)
-    num = num.toString().split('e');
-    return signo * (num[0] + 'e' + (num[1] ? (+num[1] - decimales) : -decimales));
-}
-
 document.addEventListener("DOMContentLoaded", start);
-document.querySelector("#limpiar").addEventListener("click",limpiar)
+document.querySelector("#limpiar").addEventListener("click", limpiar);
 
-
-function limpiar(event){
-    event.preventDefault();
-
-    location.reload()
+function limpiar(event) {
+  event.preventDefault();
+  location.reload();
 }
+
 function start() {
   const cantValores = prompt("¿Cuántos valores se desea ingresar?");
 
@@ -66,7 +52,7 @@ function graficarTabla(cantValores) {
 
   const btnParabola = document.createElement("button");
   btnParabola.id = "btnParabola";
-  btnParabola.classList.add("btn", "btn-secondary", "py-2", "mx-2");
+  btnParabola.classList.add("btn", "btn-success", "py-2", "mx-2");
   btnParabola.addEventListener("click", parabola);
   btnParabola.textContent = "Parabola de mínimos cuadrados";
   card.appendChild(btnParabola);
@@ -79,7 +65,7 @@ function graficarTabla(cantValores) {
   card.appendChild(btnHomografica);
 
   const btnExponencial = document.createElement("button");
-  btnExponencial.id = "btnParabola";
+  btnExponencial.id = "btnExponencial";
   btnExponencial.classList.add("btn", "btn-warning", "py-2", "mx-2");
   btnExponencial.addEventListener("click", exponencial);
   btnExponencial.textContent = "Exponencial de mínimos cuadrados";
@@ -127,37 +113,37 @@ function recta(event) {
 
   const resultado = document.querySelector("#resultado");
 
-  const cardResultado = document.createElement("div")
-  cardResultado.classList.add("card")
-  //cardResultado.style = "width: 40rem;"
-  const cardBody = document.createElement("div")
-  cardBody.classList.add("card-body")
-  const cardTitle = document.createElement("h5")
-  cardTitle.classList.add("card-title")
-  cardTitle.textContent = "Aproximación por recta de mínimos cuadrados"
+  const cardResultado = document.createElement("div");
+  cardResultado.classList.add("card");
+  cardResultado.classList.add("border","border-info","my-1")
+
+  const cardBody = document.createElement("div");
+  cardBody.classList.add("card-body");
+  const cardTitle = document.createElement("h5");
+  cardTitle.classList.add("card-title");
+  cardTitle.textContent = "Aproximación por recta de mínimos cuadrados";
 
   const parrafo = document.createElement("p");
-  parrafo.classList.add("card-text")
+  parrafo.classList.add("card-text");
   parrafo.textContent = `La ecuación de la recta es: y = ${a}.x + ${b}`;
 
-  cardBody.appendChild(cardTitle)
-  cardBody.appendChild(parrafo)
+  cardBody.appendChild(cardTitle);
+  cardBody.appendChild(parrafo);
 
-  let pX =arrayX.map(num => Number(a)*num + Number(b))
-  const d2 = calcularErrorCuadratico(arrayY,pX);
-  const sumD2 = d2.reduce((a,b) => a + b, 0)
-  console.log(sumD2)
+  let pX = arrayX.map((num) => Number(a) * num + Number(b));
+  const d2 = calcularErrorCuadratico(arrayY, pX);
+  const sumD2 = d2.reduce((a, b) => a + b, 0);
+  console.log(sumD2);
 
-  cardError = document.createElement("div")
-  cardError.classList.add("card-subtitle")
-  cardError.textContent = `El error cuadrático es ${sumD2}`
+  cardError = document.createElement("div");
+  cardError.classList.add("card-subtitle");
+  cardError.textContent = `El error cuadrático es ${sumD2}`;
 
   cardBody.appendChild(cardError);
 
-  cardResultado.appendChild(cardBody)
+  cardResultado.appendChild(cardBody);
 
-  resultado.appendChild(cardResultado)
-
+  resultado.appendChild(cardResultado);
 }
 
 function parabola(event) {
@@ -196,36 +182,39 @@ function parabola(event) {
 
   const resultado = document.querySelector("#resultado");
 
-  const cardResultado = document.createElement("div")
-  cardResultado.classList.add("card")
-  //cardResultado.style = "width: 40rem;"
-  const cardBody = document.createElement("div")
-  cardBody.classList.add("card-body")
-  const cardTitle = document.createElement("h5")
-  cardTitle.classList.add("card-title")
-  cardTitle.textContent = "Aproximación por parabola de mínimos cuadrados"
+  const cardResultado = document.createElement("div");
+  cardResultado.classList.add("card");
+  cardResultado.classList.add("border","border-success","my-1")
+
+  const cardBody = document.createElement("div");
+  cardBody.classList.add("card-body");
+  const cardTitle = document.createElement("h5");
+  cardTitle.classList.add("card-title");
+  cardTitle.textContent = "Aproximación por parabola de mínimos cuadrados";
 
   const parrafo = document.createElement("p");
-  parrafo.classList.add("card-text")
+  parrafo.classList.add("card-text");
   parrafo.textContent = `La ecuación de la parabola es: y = ${a}.x^2 + ${b}.x + ${c}`;
 
-  cardBody.appendChild(cardTitle)
-  cardBody.appendChild(parrafo)
+  cardBody.appendChild(cardTitle);
+  cardBody.appendChild(parrafo);
 
-  let pX =arrayX.map(num => Number(a)*Math.pow(num,2) + Number(b)*num + Number(c))
-  const d2 = calcularErrorCuadratico(arrayY,pX);
-  const sumD2 = d2.reduce((a,b) => a + b, 0)
-  console.log(sumD2)
+  let pX = arrayX.map(
+    (num) => Number(a) * Math.pow(num, 2) + Number(b) * num + Number(c)
+  );
+  const d2 = calcularErrorCuadratico(arrayY, pX);
+  const sumD2 = d2.reduce((a, b) => a + b, 0);
+  console.log(sumD2);
 
-  cardError = document.createElement("div")
-  cardError.classList.add("card-subtitle")
-  cardError.textContent = `El error cuadrático es ${sumD2}`
+  cardError = document.createElement("div");
+  cardError.classList.add("card-subtitle");
+  cardError.textContent = `El error cuadrático es ${sumD2}`;
 
   cardBody.appendChild(cardError);
 
-  cardResultado.appendChild(cardBody)
+  cardResultado.appendChild(cardBody);
 
-  resultado.appendChild(cardResultado)
+  resultado.appendChild(cardResultado);
 }
 
 function homografica(event) {
@@ -263,39 +252,40 @@ function homografica(event) {
 
   const resultado = document.querySelector("#resultado");
 
-    const cardResultado = document.createElement("div")
-  cardResultado.classList.add("card")
+  const cardResultado = document.createElement("div");
+  cardResultado.classList.add("card");
+  cardResultado.classList.add("border","border-info","my-1")
   //cardResultado.style = "width: 40rem;"
-  const cardBody = document.createElement("div")
-  cardBody.classList.add("card-body")
-  const cardTitle = document.createElement("h5")
-  cardTitle.classList.add("card-title")
-  cardTitle.textContent = "Aproximación por Modelo y = (a+bx)/x"
+  const cardBody = document.createElement("div");
+  cardBody.classList.add("card-body");
+  const cardTitle = document.createElement("h5");
+  cardTitle.classList.add("card-title");
+  cardTitle.textContent = "Aproximación por Modelo y = (a+bx)/x";
 
   const parrafo = document.createElement("p");
-  parrafo.classList.add("card-text")
+  parrafo.classList.add("card-text");
   parrafo.textContent = `La ecuación de la recta es: y = ${a}.x + ${b}`;
 
-  const parrafo2 = document.createElement("p")
-  parrafo2.classList.add("card-text")
-  parrafo2.textContent = `Con variable original: y = ${a}/x + ${b}`
+  const parrafo2 = document.createElement("p");
+  parrafo2.classList.add("card-text");
+  parrafo2.textContent = `Con variable original: y = ${a}/x + ${b}`;
 
-  cardBody.appendChild(cardTitle)
-  cardBody.appendChild(parrafo)
-  cardBody.appendChild(parrafo2)
+  cardBody.appendChild(cardTitle);
+  cardBody.appendChild(parrafo);
+  cardBody.appendChild(parrafo2);
 
-  let pX =arrayX.map(num => a/num + b)
-  const d2 = calcularErrorCuadratico(arrayY,pX);
-  const sumD2 = d2.reduce((a,b) => a + b, 0)
-  console.log(sumD2)
+  let pX = arrayX.map((num) => a / num + b);
+  const d2 = calcularErrorCuadratico(arrayY, pX);
+  const sumD2 = d2.reduce((a, b) => a + b, 0);
+  console.log(sumD2);
 
-  cardError = document.createElement("div")
-  cardError.classList.add("card-subtitle")
-  cardError.textContent = `El error cuadrático es ${sumD2}`
+  cardError = document.createElement("div");
+  cardError.classList.add("card-subtitle");
+  cardError.textContent = `El error cuadrático es ${sumD2}`;
 
   cardBody.appendChild(cardError);
 
-  cardResultado.appendChild(cardBody)
+  cardResultado.appendChild(cardBody);
 
   resultado.appendChild(cardResultado);
 }
@@ -335,48 +325,43 @@ function exponencial(event) {
 
   const resultado = document.querySelector("#resultado");
 
-  const cardResultado = document.createElement("div")
-  cardResultado.classList.add("card")
+  const cardResultado = document.createElement("div");
+  cardResultado.classList.add("card");
+  cardResultado.classList.add("border","border-warning","my-1")
   //cardResultado.style = "width: 40rem;"
-  const cardBody = document.createElement("div")
-  cardBody.classList.add("card-body")
-  const cardTitle = document.createElement("h5")
-  cardTitle.classList.add("card-title")
-  cardTitle.textContent = "Aproximación por Exponencial"
+  const cardBody = document.createElement("div");
+  cardBody.classList.add("card-body");
+  const cardTitle = document.createElement("h5");
+  cardTitle.classList.add("card-title");
+  cardTitle.textContent = "Aproximación por Exponencial";
 
   const parrafo = document.createElement("p");
-  parrafo.classList.add("card-text")
+  parrafo.classList.add("card-text");
   parrafo.textContent = `La ecuación de la recta es: y = ${a}.x + ${b}`;
 
-  const parrafo2 = document.createElement("p")
-  parrafo2.classList.add("card-text")
+  const parrafo2 = document.createElement("p");
+  parrafo2.classList.add("card-text");
   const bOriginal = Math.exp(b);
-  parrafo2.textContent = `Con variable original: y = ${bOriginal}.e^${a}`
+  parrafo2.textContent = `Con variable original: y = ${bOriginal}.e^${a}`;
 
-  cardBody.appendChild(cardTitle)
-  cardBody.appendChild(parrafo)
-  cardBody.appendChild(parrafo2)
+  cardBody.appendChild(cardTitle);
+  cardBody.appendChild(parrafo);
+  cardBody.appendChild(parrafo2);
 
-  let pX =arrayX.map(num => Number(bOriginal)*Math.exp(Number(a)*num))
-  const d2 = calcularErrorCuadratico(arrayY,pX);
-  const sumD2 = d2.reduce((a,b) => a + b, 0)
+  let pX = arrayX.map((num) => Number(bOriginal) * Math.exp(Number(a) * num));
+  const d2 = calcularErrorCuadratico(arrayY, pX);
+  const sumD2 = d2.reduce((a, b) => a + b, 0);
 
-  cardError = document.createElement("div")
-  cardError.classList.add("card-subtitle")
-  cardError.textContent = `El error cuadrático es ${sumD2}`
-  console.log(sumD2)
+  cardError = document.createElement("div");
+  cardError.classList.add("card-subtitle");
+  cardError.textContent = `El error cuadrático es ${sumD2}`;
+  console.log(sumD2);
 
   cardBody.appendChild(cardError);
 
-  cardResultado.appendChild(cardBody)
+  cardResultado.appendChild(cardBody);
 
   resultado.appendChild(cardResultado);
-  
-
-
-
-
-  //tabla.innerHTML = "";
 }
 
 function calcularDatos(X, Y) {
@@ -427,19 +412,12 @@ function calcularDatos(X, Y) {
   return datos;
 }
 
-function ocultarUI() {
-//   const botones = document.querySelector("#botones");
-//   botones.classList.add("d-none");
-//   const containerForm = document.querySelector("#containerForm");
-//   containerForm.classList.add("d-none")
-}
-
-function calcularErrorCuadratico(fX,pX){
+function calcularErrorCuadratico(fX, pX) {
   let d2 = [];
 
-  for(let i = 0;i<fX.length;i++){
+  for (let i = 0; i < fX.length; i++) {
     let di = fX[i] - pX[i];
-    let d2i = di*di
+    let d2i = di * di;
     d2.push(d2i);
   }
 
